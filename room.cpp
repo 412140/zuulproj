@@ -3,11 +3,11 @@
 #include "item.h"
 using namespace std;
 
-Room::Room(const char *desc) : desc(desc)
+Room::Room(const char* desc) : desc(desc)
 {
 }
 
-void Room::setExits(Room *north, Room *south, Room *east, Room *west)
+void Room::setExits(Room* north, Room* south, Room* east, Room* west)
 {
 	exits["north"] = north;
     exits["south"] = south;
@@ -61,7 +61,7 @@ Item* Room::getItem(const char *itemName)
 	{
 		if (strcmp((*it)->getName(), itemName) == 0)
 		{
-			Item *item = *it;
+			Item* item = *it;
 			items.erase(it);
 			return item;
 		}
@@ -69,11 +69,17 @@ Item* Room::getItem(const char *itemName)
 return nullptr;
 }
 
-const map<const char*, Room*> &Room::getExits() const
+const map<const char*, Room*>& Room::getExits() const
 {
-	return exits;
-}
+    cout << "available exits:";
+    for (const auto& exit : exits)
+	 {
+        cout << exit.first << " " << endl;
+    }
+    
 
+    return exits;
+}
 void Room::printInf()
 {
 	cout << "room description: " << desc << endl;

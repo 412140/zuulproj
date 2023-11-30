@@ -20,7 +20,7 @@ public:
   bool hasItem(const char* itemName);
   Item* getItem(const char* itemName);
   void printInf();
-  const map<const char*, Room*> &getExits() const;
+  const map<const char*, Room*>& getExits() const;
 
 private:
   const char* desc;
