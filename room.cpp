@@ -9,10 +9,10 @@ Room::Room(const char *desc) : desc(desc)
 
 void Room::setExits(Room *north, Room *south, Room *east, Room *west)
 {
-	exits["North"] = north;
-	exits["South"] = south;
-	exits["East"] = east;
-	exits["West"] = west;
+	exits["north"] = north;
+    exits["south"] = south;
+    exits["east"] = east;
+    exits["west"] = west;
 }
 
 void Room::setItems(Item *item)
@@ -55,15 +55,30 @@ bool Room::hasItem(const char *itemName)
 	return false;
 }
 
-void Room::getItem(const char *itemName)
+Item* Room::getItem(const char *itemName)
 {
 	for (auto it = items.begin(); it != items.end(); ++it)
 	{
 		if (strcmp((*it)->getName(), itemName) == 0)
 		{
-			Item* item = *it;
+			Item *item = *it;
 			items.erase(it);
 			return item;
 		}
+	}
+return nullptr;
+}
+
+const map<const char*, Room*> &Room::getExits() const
+{
+	return exits;
+}
+
+void Room::printInf()
+{
+	cout << "room description: " << desc << endl;
+	for (auto it = items.begin(); it != items.end(); ++it)
+	{
+		cout << "Item in the room: " << (*it)->getName() << endl;
 	}
 }

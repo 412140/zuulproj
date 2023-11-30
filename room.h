@@ -13,17 +13,19 @@ class Item;
 class Room
 {
 public:
-  Room(const char *desc);
-  void setExits(Room *north, Room *south, Room *east, Room *west);
-  void setItems(Item *item);
+  Room(const char* desc);
+  void setExits(Room* north, Room* south, Room* east, Room* west);
+  void setItems(Item* item);
   void printDesc();
-  bool hasItem(const char *itemName);
-  Item* getItem(const char *itemName);
+  bool hasItem(const char* itemName);
+  Item* getItem(const char* itemName);
+  void printInf();
+  const map<const char*, Room*> &getExits() const;
 
 private:
-  const char *desc;
-  map<const char *, Room *> exits;
-  vector<Item *> items;
+  const char* desc;
+  map<const char*, Room*> exits;
+  vector<Item*> items;
 };
 
 #endif
