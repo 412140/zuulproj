@@ -27,7 +27,6 @@ https://www.geeksforgeeks.org/header-files-in-c-cpp-and-its-uses/
 https://stackoverflow.com/questions/1653958/why-are-ifndef-and-define-used-in-c-header-files
 */
 
-
 int main()
 {
 
@@ -142,24 +141,38 @@ int main()
         }       
         else if (strcmp(cmd, "go") == 0)
         {
-             string direction;
-    cout << "Enter direction (north, south, east, west): ";
-    cin >> direction;
+            char direction[20];
+            cout << "Enter direction (north, south, east, west): ";
+            cin >> direction;
+            cin.ignore(); //eat return
 
-    // make lowercase
-    for (int i = 0; i < direction.size(); i++) {
-        direction[i] = tolower(direction[i]);
-    }
+            // Lowercase the direction to match instructions
+            for (int i = 0; direction[i]; i++)
+            {
+                direction[i] = tolower(direction[i]);
+            }
 
-    
-    auto exits = currentRoom->getExits();
+            cout << "Entered direction: " << direction << endl;
 
-    if (exits.count(direction.c_str()) > 0) {
-        currentRoom = exits[direction.c_str()];
-        currentRoom->printDesc();
-    } else {
-        cout << "Invalid direction. Try again." << endl;
-    }
+            auto it = currentRoom->getExits().find(direction);
+            if (it != currentRoom->getExits().end())
+            {
+                currentRoom = it->second;
+                currentRoom->printDesc();
+            }
+            else
+            {
+                cout << "Invalid direction. Try again." << endl;
+                cout << "Valid directions are:";
+                for (const auto &exit : currentRoom->getExits())
+                {
+                    cout << " " << exit.first;
+                }
+                cout << endl;
+            }
+
+
+
         } else{cout << "command not recognized.." << endl;}
         
         
