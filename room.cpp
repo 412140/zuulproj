@@ -69,17 +69,20 @@ Item* Room::getItem(const char *itemName)
 return nullptr;
 }
 
-const map<const char*, Room*>& Room::getExits() const
+const map<string, Room*>& Room::getExits() const
 {
     cout << "available exits:";
     for (const auto& exit : exits)
 	 {
-        cout << exit.first << " " << endl;
+        cout << exit.first << endl;
     }
     
 
     return exits;
 }
+
+
+
 void Room::printInf()
 {
 	cout << "room description: " << desc << endl;
@@ -88,3 +91,15 @@ void Room::printInf()
 		cout << "Item in the room: " << (*it)->getName() << endl;
 	}
 }
+/*
+bool Room::hasItemInInven(const char *itemName, const vector<Item *> &inventory)
+{
+    for (const auto &item : inventory)
+    {
+        if (strcmp(item->getName(), itemName) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}*/

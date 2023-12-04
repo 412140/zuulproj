@@ -26,7 +26,8 @@ https://cplusplus.com/reference/map/map/
 https://www.geeksforgeeks.org/header-files-in-c-cpp-and-its-uses/
 https://stackoverflow.com/questions/1653958/why-are-ifndef-and-define-used-in-c-header-files
 */
-
+bool hasItemInInven(const char* itemName, const vector<Item*>& inventory); // i kept getting errors no matter what for "identifier "hasItemInInven" is undefined" and google basically just said that it was being used before definition so i though this would basically fix it
+            
 int main()
 {
 
@@ -144,7 +145,7 @@ int main()
             char direction[20];
             cout << "Enter direction (north, south, east, west): ";
             cin >> direction;
-            cin.ignore(); //eat return
+            cin.ignore(); // eat return
 
             // Lowercase the direction to match instructions
             for (int i = 0; direction[i]; i++)
@@ -157,14 +158,26 @@ int main()
             auto it = currentRoom->getExits().find(direction);
             if (it != currentRoom->getExits().end())
             {
-                currentRoom = it->second;
-                currentRoom->printDesc();
+                const char* nextRoomName = it->first.c_str(); // because i had to use string for the name of the exit to work i need to convert to cstring with const char
+                Room* nextRoom = it->second;
+
+                // locked room functions, took a while to get this current room next room stuff down
+                if ((strcmp(nextRoomName, "pool") == 0 && !hasItemInInven("keyCard", inventory)) ||
+                    (strcmp(nextRoomName, "exit") == 0 && !hasItemInInven("metKey", inventory)))
+                {
+                    cout << "You need a specific item to go in that direction." << endl;
+                }
+                else
+                {
+                    currentRoom = nextRoom;
+                    currentRoom->printDesc();
+                }
             }
             else
             {
                 cout << "Invalid direction. Try again." << endl;
                 cout << "Valid directions are:";
-                for (const auto &exit : currentRoom->getExits())
+                for (const auto& exit : currentRoom->getExits())
                 {
                     cout << " " << exit.first;
                 }
@@ -187,3 +200,19 @@ int main()
 
 
     return 0;}
+
+    bool hasItemInInven(const char* itemName, const vector<Item*>& inventory)
+            {  
+            
+                
+                    for (const auto &item : inventory)
+                    {
+                        if (strcmp(item->getName(), itemName) == 0)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                    
+
+            }
